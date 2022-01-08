@@ -27,7 +27,7 @@ List<GetPage> routes() => <GetPage>[
       ),
       GetPage<dynamic>(
         name: RouteNames.registerPage,
-        page: () => const RegisterPage(),
+        page: () => RegisterPage(),
         transition: Transition.downToUp,
         transitionDuration: const Duration(
           milliseconds: 500,
@@ -36,5 +36,6 @@ List<GetPage> routes() => <GetPage>[
       GetPage<dynamic>(
         name: RouteNames.dashboardPage,
         page: () => const DashboardPage(),
+        transition: Transition.cupertino,
       ),
     ];

@@ -6,9 +6,11 @@ class CustomTextField extends StatefulWidget {
     required this.callback,
     required this.label,
     required this.isPassword,
+    required this.validator,
   }) : super(key: key);
 
   final void Function(String) callback;
+  final String? Function(String?) validator;
   final String label;
   final bool isPassword;
 
@@ -23,28 +25,32 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      cursorColor: Theme.of(context).colorScheme.primaryVariant,
-      onChanged: widget.callback,
-      controller: controller,
-      obscureText: widget.isPassword && !isVisible,
-      decoration: InputDecoration(
-        suffixIcon: widget.isPassword
-            ? IconButton(
-                icon: Icon(
-                  isVisible ? Icons.visibility : Icons.visibility_off,
-                  color: isVisible
-                      ? Theme.of(context).colorScheme.primaryVariant
-                      : Theme.of(context).colorScheme.primary,
-                ),
-                onPressed: () {
-                  setState(() {
-                    isVisible = !isVisible;
-                  });
-                },
-              )
-            : null,
-        label: Text(widget.label),
+    return SizedBox(
+      height: 100,
+      child: TextFormField(
+        validator: widget.validator,
+        cursorColor: Theme.of(context).colorScheme.primaryVariant,
+        onChanged: widget.callback,
+        controller: controller,
+        obscureText: widget.isPassword && !isVisible,
+        decoration: InputDecoration(
+          suffixIcon: widget.isPassword
+              ? IconButton(
+                  icon: Icon(
+                    isVisible ? Icons.visibility : Icons.visibility_off,
+                    color: isVisible
+                        ? Theme.of(context).colorScheme.primaryVariant
+                        : Theme.of(context).colorScheme.primary,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isVisible = !isVisible;
+                    });
+                  },
+                )
+              : null,
+          label: Text(widget.label),
+        ),
       ),
     );
   }

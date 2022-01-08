@@ -31,6 +31,24 @@ final ElevatedButtonThemeData _elevatedButtonThemeData =
   ),
 );
 
+final OutlinedButtonThemeData _outlinedButtonThemeData =
+    OutlinedButtonThemeData(
+  style: OutlinedButton.styleFrom(
+    primary: _colorScheme.primary,
+    side: BorderSide(
+      color: _colorScheme.primary,
+      width: 2,
+    ),
+    textStyle: const TextStyle(
+      fontSize: 22,
+    ),
+    minimumSize: const Size(320, 70),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(40),
+    ),
+  ),
+);
+
 final InputDecorationTheme _inputDecorationTheme = InputDecorationTheme(
   labelStyle: TextStyle(
     color: _colorScheme.primaryVariant,
@@ -48,26 +66,21 @@ final InputDecorationTheme _inputDecorationTheme = InputDecorationTheme(
       color: _colorScheme.primary,
     ),
   ),
-  isDense: true,
-  contentPadding: const EdgeInsets.all(20),
-);
-
-final OutlinedButtonThemeData _outlinedButtonThemeData =
-    OutlinedButtonThemeData(
-  style: OutlinedButton.styleFrom(
-    primary: _colorScheme.primary,
-    side: BorderSide(
-      color: _colorScheme.primary,
-      width: 2,
-    ),
-    textStyle: const TextStyle(
-      fontSize: 22,
-    ),
-    minimumSize: const Size(320, 70),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(40),
+  errorBorder: OutlineInputBorder(
+    borderSide: BorderSide(
+      color: _colorScheme.error,
     ),
   ),
+  errorStyle: TextStyle(
+    color: _colorScheme.error,
+  ),
+  focusedErrorBorder: OutlineInputBorder(
+    borderSide: BorderSide(
+      color: _colorScheme.primary,
+    ),
+  ),
+  isDense: true,
+  contentPadding: const EdgeInsets.all(20),
 );
 
 final ThemeData theme = ThemeData(

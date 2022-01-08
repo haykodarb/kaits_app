@@ -2,49 +2,61 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kaits_app/presentation/common/text_field.dart';
 import 'package:kaits_app/presentation/register/register_controller.dart';
-import 'package:kaits_app/routes.dart';
-import 'dart:io' show Platform;
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  RegisterPage({Key? key}) : super(key: key);
+
+  final RegisterController _registerController = RegisterController();
 
   Widget _registerForm() {
-    BuildContext context = Get.context!;
+    final BuildContext context = Get.context!;
 
     return ConstrainedBox(
-      constraints: const BoxConstraints(maxHeight: 400, maxWidth: 500),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          CustomTextField(
-            callback: (String value) {},
-            label: 'First name',
-            isPassword: false,
-          ),
-          CustomTextField(
-            callback: (String value) {},
-            label: 'Username',
-            isPassword: false,
-          ),
-          CustomTextField(
-            callback: (String value) {},
-            label: 'Password',
-            isPassword: true,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Get.offAllNamed(RouteNames.dashboardPage);
-            },
-            child: Text(
-              'Register',
-              style: TextStyle(
-                fontSize: 22,
-                color: Theme.of(context).colorScheme.onSurface,
-                fontWeight: FontWeight.w600,
+      constraints: BoxConstraints.loose(
+        const Size.fromHeight(600),
+      ),
+      child: Form(
+        key: _registerController.formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            CustomTextField(
+              validator: _registerController.nameValidator,
+              callback: _registerController.onNameChange,
+              label: 'First name',
+              isPassword: false,
+            ),
+            CustomTextField(
+              validator: _registerController.usernameValidator,
+              callback: _registerController.onUsernameChange,
+              label: 'Username',
+              isPassword: false,
+            ),
+            CustomTextField(
+              validator: _registerController.passwordValidator,
+              callback: _registerController.onPasswordChange,
+              label: 'Password',
+              isPassword: true,
+            ),
+            SizedBox(
+              height: 50,
+              child: Obx(
+                () => Text(
+                  _registerController.errorMessage.value,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Theme.of(context).colorScheme.error,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
             ),
-          ),
-        ],
+            ElevatedButton(
+              onPressed: _registerController.onSubmitButton,
+              child: const Text('Register'),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -52,19 +64,17 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-      init: RegisterController(),
+      init: _registerController,
       builder: (RegisterController controller) {
         return Scaffold(
           backgroundColor: Theme.of(context).colorScheme.background,
           body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 50,
-              vertical: 50,
+            padding: const EdgeInsets.only(
+              top: 75,
+              right: 50,
+              left: 50,
             ),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: _registerForm(),
-            ),
+            child: _registerForm(),
           ),
         );
       },

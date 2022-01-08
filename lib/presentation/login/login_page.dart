@@ -1,18 +1,16 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kaits_app/presentation/common/text_field.dart';
 import 'package:kaits_app/presentation/login/login_controller.dart';
-import 'package:kaits_app/routes.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
 
-  final LoginController loginController = LoginController();
+  final LoginController _loginController = LoginController();
 
   Widget _loginButton() {
     return ElevatedButton(
-      onPressed: loginController.loginButtonCallback,
+      onPressed: _loginController.loginButtonCallback,
       child: const Text(
         'Login',
       ),
@@ -22,36 +20,33 @@ class LoginPage extends StatelessWidget {
   Widget _loginForm() {
     final BuildContext context = Get.context!;
 
-    return ConstrainedBox(
-      constraints: const BoxConstraints(maxHeight: 500),
+    return Form(
+      key: _loginController.formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 250,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CustomTextField(
-                  callback: loginController.onUsernameChange,
-                  label: 'Username',
-                  isPassword: false,
-                ),
-                CustomTextField(
-                  callback: loginController.onPasswordChange,
-                  label: 'Password',
-                  isPassword: true,
-                ),
-              ],
-            ),
+          CustomTextField(
+            validator: _loginController.usernameValidator,
+            callback: _loginController.onUsernameChange,
+            label: 'Username',
+            isPassword: false,
           ),
-          Obx(
-            () => Text(
-              loginController.errorMessage.value,
-              style: TextStyle(
-                fontSize: 20,
-                color: Theme.of(context).colorScheme.error,
-                fontWeight: FontWeight.w600,
+          CustomTextField(
+            validator: _loginController.passwordValidator,
+            callback: _loginController.onPasswordChange,
+            label: 'Password',
+            isPassword: true,
+          ),
+          SizedBox(
+            height: 50,
+            child: Obx(
+              () => Text(
+                _loginController.errorMessage.value,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Theme.of(context).colorScheme.error,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ),
@@ -64,19 +59,17 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-      init: loginController,
+      init: _loginController,
       builder: (LoginController controller) {
         return Scaffold(
           backgroundColor: Theme.of(context).colorScheme.background,
           body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 50,
-              vertical: 50,
+            padding: const EdgeInsets.only(
+              top: 75,
+              right: 50,
+              left: 50,
             ),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: _loginForm(),
-            ),
+            child: _loginForm(),
           ),
         );
       },

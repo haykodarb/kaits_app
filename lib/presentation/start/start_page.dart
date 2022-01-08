@@ -36,7 +36,7 @@ class StartPage extends StatelessWidget {
         child: Text(
           'Kaits',
           style: TextStyle(
-            fontSize: 55,
+            fontSize: 75,
             fontWeight: FontWeight.w600,
             color: Theme.of(context).colorScheme.primaryVariant,
           ),
