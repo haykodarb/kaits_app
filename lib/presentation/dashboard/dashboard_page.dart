@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kaits_app/pages/dashboard/controller.dart';
+import 'package:kaits_app/presentation/dashboard/dashboard_controller.dart';
 import 'package:kaits_app/routes.dart';
+
+enum DrawerButtons {
+  home,
+  communities,
+  logout,
+}
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({Key? key}) : super(key: key);
 
-  Widget _logoutButton() {
+  Widget _drawerButton() {
     final BuildContext context = Get.context!;
-
     return Column(
       children: [
         Container(
@@ -16,6 +21,7 @@ class DashboardPage extends StatelessWidget {
             horizontal: 20,
           ),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(
                 Icons.logout,
@@ -24,7 +30,7 @@ class DashboardPage extends StatelessWidget {
               Expanded(
                 child: MaterialButton(
                   onPressed: () {
-                    Get.offAllNamed(RouteNames.loginPage);
+                    Get.offAllNamed(RouteNames.startPage);
                   },
                   child: Container(
                     alignment: Alignment.centerLeft,
@@ -114,11 +120,7 @@ class DashboardPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  _logoutButton(),
-                  _logoutButton(),
-                  _logoutButton(),
-                  _logoutButton(),
-                  _logoutButton(),
+                  _drawerButton(),
                 ],
               ),
             ),

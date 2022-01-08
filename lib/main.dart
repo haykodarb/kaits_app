@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: theme,
       getPages: routes(),
       color: Theme.of(context).colorScheme.background,
-      initialRoute: RouteNames.loginPage,
+      initialRoute: RouteNames.startPage,
     );
   }
 }
