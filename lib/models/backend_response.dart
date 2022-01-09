@@ -2,7 +2,12 @@ import 'dart:convert';
 
 class BackendReponse {
   bool success = false;
-  String payload = '';
+  dynamic payload;
+
+  BackendReponse({
+    required this.success,
+    required this.payload,
+  });
 
   BackendReponse.fromBody(String body) {
     Map<String, dynamic> parsedBody = jsonDecode(body);

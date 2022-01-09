@@ -11,7 +11,7 @@ const ColorScheme _colorScheme = ColorScheme.dark(
   onBackground: Color(0xFF2A2D37),
   onPrimary: Color(0xFFf8f8f7),
   onSecondary: Color(0xFFf8f8f7),
-  onSurface: Color(0xFFF5FAFF),
+  onSurface: Color(0xFF2A2D37),
 );
 
 final ElevatedButtonThemeData _elevatedButtonThemeData =
@@ -83,6 +83,10 @@ final InputDecorationTheme _inputDecorationTheme = InputDecorationTheme(
   contentPadding: const EdgeInsets.all(20),
 );
 
+final IconThemeData _iconThemeData = IconThemeData(
+  color: _colorScheme.onSurface,
+);
+
 final ThemeData theme = ThemeData(
   colorScheme: _colorScheme,
   textTheme: GoogleFonts.notoSansTextTheme().apply(
@@ -93,4 +97,5 @@ final ThemeData theme = ThemeData(
   elevatedButtonTheme: _elevatedButtonThemeData,
   outlinedButtonTheme: _outlinedButtonThemeData,
   inputDecorationTheme: _inputDecorationTheme,
+  iconTheme: _iconThemeData,
 );

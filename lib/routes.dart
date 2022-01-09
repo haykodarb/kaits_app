@@ -1,15 +1,17 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:kaits_app/presentation/communities/communities_page.dart';
 import 'package:kaits_app/presentation/login/login_page.dart';
 import 'package:kaits_app/presentation/dashboard/dashboard_page.dart';
 import 'package:kaits_app/presentation/register/register_page.dart';
 import 'package:kaits_app/presentation/start/start_page.dart';
 
 class RouteNames {
-  static const loginPage = '/login';
   static const startPage = '/start';
-  static const dashboardPage = '/dashboard';
+  static const loginPage = '/login';
   static const registerPage = '/register';
+  static const dashboardPage = '/dashboard';
+  static const communitiesPage = '/communities';
 }
 
 List<GetPage> routes() => <GetPage>[
@@ -35,7 +37,12 @@ List<GetPage> routes() => <GetPage>[
       ),
       GetPage<dynamic>(
         name: RouteNames.dashboardPage,
-        page: () => const DashboardPage(),
+        page: () => DashboardPage(),
+        transition: Transition.cupertino,
+      ),
+      GetPage<dynamic>(
+        name: RouteNames.communitiesPage,
+        page: () => CommunitiesPage(),
         transition: Transition.cupertino,
       ),
     ];

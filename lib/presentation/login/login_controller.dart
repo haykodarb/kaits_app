@@ -17,12 +17,15 @@ class LoginController extends GetxController {
   final RxString errorMessage = ''.obs;
 
   void onUsernameChange(String value) {
+    formKey.currentState!.validate();
+
     form.update((val) {
       val!.username = value;
     });
   }
 
   void onPasswordChange(String value) {
+    formKey.currentState!.validate();
     form.update((val) {
       val!.password = value;
     });
@@ -67,7 +70,9 @@ class LoginController extends GetxController {
 
       if (response.success) {
         errorMessage.value = '';
-        Get.offAllNamed(RouteNames.dashboardPage);
+        if (await LoginBackend.storeAuthToken(token: response.payload)) {
+          Get.offAllNamed(RouteNames.communitiesPage);
+        }
         // Save token in memory
       } else {
         errorMessage.value = response.payload;
