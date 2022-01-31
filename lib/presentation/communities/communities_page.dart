@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:kaits_app/presentation/communities/communities_controller.dart';
 import 'package:kaits_app/routes.dart';
 
@@ -8,6 +7,61 @@ class CommunitiesPage extends StatelessWidget {
   CommunitiesPage({Key? key}) : super(key: key);
 
   final CommunitiesController _communitiesController = CommunitiesController();
+
+  Widget _bottomButtons() {
+    final BuildContext context = Get.context!;
+
+    return Expanded(
+      flex: 1,
+      child: Align(
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                'Join one',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Theme.of(context).colorScheme.onBackground,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: _communitiesController.createNewButtonCallback,
+              child: Text(
+                'Create new',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Theme.of(context).colorScheme.onBackground,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _communitiesList() {
+    return Expanded(
+      flex: 3,
+      child: Obx(
+        () {
+          return ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              return _communityCard(
+                _communitiesController.communitiesForUser[index].name,
+              );
+            },
+            itemCount: _communitiesController.communitiesForUser.length,
+          );
+        },
+      ),
+    );
+  }
 
   Widget _communityCard(String name) {
     final BuildContext context = Get.context!;
@@ -34,7 +88,7 @@ class CommunitiesPage extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              Get.toNamed(RouteNames.dashboardPage);
+              Get.offAllNamed(RouteNames.dashboardPage);
             },
             child: Text(
               name,
@@ -62,72 +116,28 @@ class CommunitiesPage extends StatelessWidget {
               top: MediaQuery.of(context).viewPadding.top,
             ),
             width: double.maxFinite,
-            child: LayoutBuilder(builder: (context, constraints) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    height: constraints.maxHeight * 0.2,
-                    child: const Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Choose a community',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500,
-                          fontStyle: FontStyle.italic,
-                        ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                const Expanded(
+                  flex: 1,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Choose a community',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w500,
+                        fontStyle: FontStyle.italic,
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: constraints.maxHeight * 0.6,
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (BuildContext context, int index) {
-                        return _communityCard('Community $index');
-                      },
-                      itemCount: 10,
-                    ),
-                  ),
-                  SizedBox(
-                      height: constraints.maxHeight * 0.2,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                'Join one',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onBackground,
-                                ),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                'Create new',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onBackground,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )),
-                ],
-              );
-            }),
+                ),
+                _communitiesList(),
+                _bottomButtons(),
+              ],
+            ),
           ),
         );
       },

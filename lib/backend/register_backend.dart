@@ -9,11 +9,9 @@ class RegisterBackend {
   static Future<BackendReponse> register({required RegisterForm form}) async {
     const String authority = BackendConstants.authority;
 
-    const String route = '/api/register';
+    const String route = '/api/users/register';
 
     final Uri url = Uri.http(authority, route);
-
-    print(jsonEncode(form.toMap()));
 
     http.Response response = await http.post(
       url,
@@ -26,8 +24,9 @@ class RegisterBackend {
       ),
     );
 
-    final BackendReponse parsedResponse = BackendReponse.fromBody(
-      response.body,
+    final BackendReponse parsedResponse = BackendReponse(
+      success: response.statusCode == 200,
+      payload: response.body,
     );
 
     return parsedResponse;

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kaits_app/presentation/common/text_field.dart';
-import 'package:kaits_app/presentation/register/register_controller.dart';
+import 'package:kaits_app/presentation/communities/create/create_community_controller.dart';
 
-class RegisterPage extends StatelessWidget {
-  RegisterPage({Key? key}) : super(key: key);
+class CreateCommunityPage extends StatelessWidget {
+  CreateCommunityPage({Key? key}) : super(key: key);
 
-  final RegisterController _registerController = RegisterController();
+  final CreateCommunityController _createCommunityController =
+      CreateCommunityController();
 
-  Widget _registerForm() {
+  Widget _communityForm() {
     final BuildContext context = Get.context!;
 
     return ConstrainedBox(
@@ -16,33 +17,27 @@ class RegisterPage extends StatelessWidget {
         const Size.fromHeight(600),
       ),
       child: Form(
-        key: _registerController.formKey,
+        key: _createCommunityController.formKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             CustomTextField(
-              validator: _registerController.emailValidator,
-              callback: _registerController.onEmailChange,
-              label: 'Email',
+              validator: _createCommunityController.nameValidator,
+              callback: _createCommunityController.onNameChange,
+              label: 'Name',
               isPassword: false,
             ),
             CustomTextField(
-              validator: _registerController.usernameValidator,
-              callback: _registerController.onUsernameChange,
-              label: 'Username',
+              validator: _createCommunityController.descriptionValidator,
+              callback: _createCommunityController.onDescriptionChange,
+              label: 'Description',
               isPassword: false,
-            ),
-            CustomTextField(
-              validator: _registerController.passwordValidator,
-              callback: _registerController.onPasswordChange,
-              label: 'Password',
-              isPassword: true,
             ),
             SizedBox(
               height: 70,
               child: Obx(
                 () => Text(
-                  _registerController.errorMessage.value,
+                  _createCommunityController.errorMessage.value,
                   style: TextStyle(
                     fontSize: 16,
                     color: Theme.of(context).colorScheme.error,
@@ -52,8 +47,8 @@ class RegisterPage extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: _registerController.onSubmitButton,
-              child: const Text('Register'),
+              onPressed: _createCommunityController.onSubmitButton,
+              child: const Text('Create Community'),
             ),
           ],
         ),
@@ -64,8 +59,8 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-      init: _registerController,
-      builder: (RegisterController controller) {
+      init: _createCommunityController,
+      builder: (CreateCommunityController controller) {
         return Scaffold(
           backgroundColor: Theme.of(context).colorScheme.background,
           body: Padding(
@@ -74,7 +69,7 @@ class RegisterPage extends StatelessWidget {
               right: 50,
               left: 50,
             ),
-            child: _registerForm(),
+            child: _communityForm(),
           ),
         );
       },

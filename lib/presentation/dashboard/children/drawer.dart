@@ -1,38 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kaits_app/presentation/dashboard/dashboard_controller.dart';
+import 'package:kaits_app/routes.dart';
 
 class DashboardDrawer extends StatelessWidget {
   DashboardDrawer({Key? key}) : super(key: key);
 
   final DashboardController _dashboardController = Get.find();
 
-  Widget _drawerButton() {
+  Widget _drawerButton({
+    required IconData icon,
+    required String text,
+    required void Function() callback,
+  }) {
     final BuildContext context = Get.context!;
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-          ),
+        MaterialButton(
+          onPressed: callback,
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Icon(Icons.logout),
               Expanded(
-                child: MaterialButton(
-                  onPressed: _dashboardController.handleLogout,
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Logout',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onBackground,
-                        fontWeight: FontWeight.w600,
-                      ),
+                flex: 1,
+                child: Icon(
+                  icon,
+                  color: Theme.of(context).colorScheme.onBackground,
+                ),
+              ),
+              Expanded(
+                flex: 4,
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    text,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground,
+                      fontWeight: FontWeight.w600,
                     ),
-                    height: 50,
                   ),
+                  height: 50,
                 ),
               ),
             ],
@@ -95,7 +105,28 @@ class DashboardDrawer extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  _drawerButton(),
+                  _drawerButton(
+                    text: 'Profile',
+                    icon: Icons.person_rounded,
+                    callback: () {},
+                  ),
+                  _drawerButton(
+                    text: 'Add book',
+                    icon: Icons.menu_book,
+                    callback: () {},
+                  ),
+                  _drawerButton(
+                    text: 'Communities',
+                    icon: Icons.people_alt_outlined,
+                    callback: () {
+                      Get.offAllNamed(RouteNames.communitiesPage);
+                    },
+                  ),
+                  _drawerButton(
+                    text: 'Logout',
+                    icon: Icons.logout,
+                    callback: _dashboardController.handleLogout,
+                  ),
                 ],
               ),
             ),

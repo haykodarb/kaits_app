@@ -10,20 +10,20 @@ class RegisterController extends GetxController {
   final Rx<RegisterForm> form = RegisterForm(
     username: '',
     password: '',
-    name: '',
+    email: '',
   ).obs;
 
   final RxString errorMessage = ''.obs;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  String? nameValidator(String? value) {
+  String? emailValidator(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter something.';
     }
 
-    if (value.length < 2) {
-      return 'Name must be at least 2 characters long';
+    if (!value.isEmail) {
+      return 'Input must be a valid email.';
     }
 
     return null;
@@ -68,10 +68,10 @@ class RegisterController extends GetxController {
     });
   }
 
-  void onNameChange(String value) {
+  void onEmailChange(String value) {
     formKey.currentState!.validate();
     form.update((val) {
-      val!.name = value;
+      val!.email = value;
     });
   }
 

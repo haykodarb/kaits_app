@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 
 class LoginController extends GetxController {
   final Rx<LoginForm> form = LoginForm(
-    username: '',
-    password: '',
+    username: 'hayko1',
+    password: 'ea29hd',
   ).obs;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();

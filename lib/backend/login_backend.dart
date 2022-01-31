@@ -10,7 +10,7 @@ class LoginBackend {
   static Future<BackendReponse> login({required LoginForm form}) async {
     const String authority = BackendConstants.authority;
 
-    const String route = '/api/login';
+    const String route = '/api/users/login';
 
     final Uri url = Uri.http(authority, route);
 
@@ -25,8 +25,9 @@ class LoginBackend {
       ),
     );
 
-    final BackendReponse parsedResponse = BackendReponse.fromBody(
-      response.body,
+    final BackendReponse parsedResponse = BackendReponse(
+      success: response.statusCode == 200,
+      payload: response.body,
     );
 
     return parsedResponse;

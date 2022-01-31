@@ -38,12 +38,12 @@ class LoginPage extends StatelessWidget {
             isPassword: true,
           ),
           SizedBox(
-            height: 50,
+            height: 70,
             child: Obx(
               () => Text(
                 _loginController.errorMessage.value,
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 16,
                   color: Theme.of(context).colorScheme.error,
                   fontWeight: FontWeight.w500,
                 ),
