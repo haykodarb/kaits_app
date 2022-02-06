@@ -55,8 +55,6 @@ class CommunitiesBackend {
     List<Community>? _listOfCommunities =
         Community.listFromResponseBody(response.body);
 
-    print(_listOfCommunities?.map((e) => e.id));
-
     final BackendReponse parsedResponse = BackendReponse(
       success: response.statusCode == 200 && _listOfCommunities != null,
       payload: _listOfCommunities,

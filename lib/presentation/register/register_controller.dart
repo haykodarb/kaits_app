@@ -84,8 +84,6 @@ class RegisterController extends GetxController {
 
   Future<void> onSubmitButton() async {
     if (formKey.currentState!.validate()) {
-      print('Validation correct!');
-
       final BackendReponse response = await RegisterBackend.register(
         form: form.value,
       );

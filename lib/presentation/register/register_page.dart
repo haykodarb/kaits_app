@@ -24,13 +24,11 @@ class RegisterPage extends StatelessWidget {
               validator: _registerController.emailValidator,
               callback: _registerController.onEmailChange,
               label: 'Email',
-              isPassword: false,
             ),
             CustomTextField(
               validator: _registerController.usernameValidator,
               callback: _registerController.onUsernameChange,
               label: 'Username',
-              isPassword: false,
             ),
             CustomTextField(
               validator: _registerController.passwordValidator,

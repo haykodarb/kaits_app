@@ -29,7 +29,6 @@ class LoginPage extends StatelessWidget {
             validator: _loginController.usernameValidator,
             callback: _loginController.onUsernameChange,
             label: 'Username',
-            isPassword: false,
           ),
           CustomTextField(
             validator: _loginController.passwordValidator,

@@ -36,6 +36,9 @@ dependencies:
   path_provider: ^2.0.8
   shared_preferences: ^2.0.11
   string_validator: ^0.3.0
+  auto_size_text: ^3.0.0
+  clickable_list_wheel_view: ^0.0.4
+  pin_code_fields: ^7.3.0
 
 dev_dependencies:
   flutter_test:

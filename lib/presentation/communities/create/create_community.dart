@@ -25,13 +25,14 @@ class CreateCommunityPage extends StatelessWidget {
               validator: _createCommunityController.nameValidator,
               callback: _createCommunityController.onNameChange,
               label: 'Name',
-              isPassword: false,
             ),
             CustomTextField(
               validator: _createCommunityController.descriptionValidator,
               callback: _createCommunityController.onDescriptionChange,
               label: 'Description',
-              isPassword: false,
+              minLines: 2,
+              maxLines: 5,
+              maxLength: 240,
             ),
             SizedBox(
               height: 70,

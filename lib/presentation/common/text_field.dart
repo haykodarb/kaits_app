@@ -5,12 +5,18 @@ class CustomTextField extends StatefulWidget {
     Key? key,
     required this.callback,
     required this.label,
-    required this.isPassword,
+    this.isPassword = false,
     required this.validator,
+    this.minLines = 1,
+    this.maxLines = 1,
+    this.maxLength = 30,
   }) : super(key: key);
 
   final void Function(String) callback;
   final String? Function(String?) validator;
+  final int minLines;
+  final int maxLines;
+  final int maxLength;
   final String label;
   final bool isPassword;
 
@@ -33,6 +39,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
         onChanged: widget.callback,
         controller: controller,
         obscureText: widget.isPassword && !isVisible,
+        minLines: widget.minLines,
+        maxLines: widget.maxLines,
+        maxLength: widget.maxLength,
         decoration: InputDecoration(
           suffixIcon: widget.isPassword
               ? IconButton(

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kaits_app/presentation/dashboard/dashboard_controller.dart';
-import 'package:kaits_app/routes.dart';
+import 'package:kaits_app/presentation/common/wrapper_scaffold/wrapper_scaffold_controller.dart';
 
-class DashboardDrawer extends StatelessWidget {
-  DashboardDrawer({Key? key}) : super(key: key);
+enum DrawerButtons {
+  home,
+  communities,
+  logout,
+}
 
-  final DashboardController _dashboardController = Get.find();
+class ScaffoldDrawer extends StatelessWidget {
+  ScaffoldDrawer({Key? key}) : super(key: key);
+  final WrapperScaffoldController _wrapperScaffoldController = Get.find();
 
   Widget _drawerButton({
     required IconData icon,
@@ -118,14 +122,12 @@ class DashboardDrawer extends StatelessWidget {
                   _drawerButton(
                     text: 'Communities',
                     icon: Icons.people_alt_outlined,
-                    callback: () {
-                      Get.offAllNamed(RouteNames.communitiesPage);
-                    },
+                    callback: _wrapperScaffoldController.goToCommunities,
                   ),
                   _drawerButton(
                     text: 'Logout',
                     icon: Icons.logout,
-                    callback: _dashboardController.handleLogout,
+                    callback: _wrapperScaffoldController.handleLogout,
                   ),
                 ],
               ),

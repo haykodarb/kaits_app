@@ -11,7 +11,11 @@ class CommunitiesController extends GetxController {
     Get.toNamed(RouteNames.createCommunityPage);
   }
 
-  Future<void> _loadCommunitiesForUser() async {
+  void joinOneButtonCallback() {
+    Get.toNamed(RouteNames.joinCommunityPage);
+  }
+
+  Future<void> getCommunitiesForUser() async {
     final BackendReponse _backendResponse =
         await CommunitiesBackend.getCommunitiesForUser();
 
@@ -20,15 +24,19 @@ class CommunitiesController extends GetxController {
     }
   }
 
+  Future<void> goToCommunityCallback(Community community) async {
+    Get.offAllNamed(RouteNames.dashboardPage);
+  }
+
   @override
   void onReady() {
     super.onReady();
-    _loadCommunitiesForUser();
+    getCommunitiesForUser();
   }
 
   @override
   void onInit() {
     super.onInit();
-    _loadCommunitiesForUser();
+    getCommunitiesForUser();
   }
 }
