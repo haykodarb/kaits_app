@@ -14,6 +14,7 @@ class RouteNames {
   static const registerPage = '/register';
   static const dashboardPage = '/dashboard';
   static const communitiesPage = '/communities';
+  static const manageCommunitiesPage = '/communities/manage';
   static const createCommunityPage = '/communities/create';
   static const joinCommunityPage = '/communities/join';
 }
@@ -21,6 +22,7 @@ class RouteNames {
 List<GetPage> routes() => <GetPage>[
       GetPage<dynamic>(
         name: RouteNames.startPage,
+        transition: Transition.noTransition,
         page: () => StartPage(),
       ),
       GetPage<dynamic>(
@@ -41,10 +43,12 @@ List<GetPage> routes() => <GetPage>[
       ),
       GetPage<dynamic>(
         name: RouteNames.dashboardPage,
+        transition: Transition.noTransition,
         page: () => DashboardPage(),
       ),
       GetPage<dynamic>(
         name: RouteNames.communitiesPage,
+        transition: Transition.noTransition,
         page: () => CommunitiesPage(),
       ),
       GetPage<dynamic>(

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kaits_app/models/community_form.dart';
+import 'package:kaits_app/models/community.dart';
 import 'package:kaits_app/presentation/common/wrapper_scaffold/wrapper_scaffold.dart';
 import 'package:kaits_app/presentation/communities/communities_controller.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 class CommunitiesPage extends StatelessWidget {
   CommunitiesPage({Key? key}) : super(key: key);
@@ -11,6 +10,87 @@ class CommunitiesPage extends StatelessWidget {
   final CommunitiesController _communitiesController = Get.put(
     CommunitiesController(),
   );
+
+  Widget _bottomSheetButton({
+    required IconData icon,
+    required String text,
+    required void Function() callback,
+  }) {
+    final BuildContext context = Get.context!;
+    return MaterialButton(
+      onPressed: callback,
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            flex: 1,
+            child: Icon(
+              icon,
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+          ),
+          Expanded(
+            flex: 4,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onBackground,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              height: 50,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _bottomSheet(Community community) {
+    final BuildContext context = Get.context!;
+    return BottomSheet(
+      onClosing: () {},
+      backgroundColor: Theme.of(context).colorScheme.background,
+      elevation: 10,
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: 200,
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: _bottomSheetButton(
+                  icon: Icons.person_add_alt_1,
+                  text: 'Invite User',
+                  callback: () {},
+                ),
+              ),
+              Expanded(
+                child: _bottomSheetButton(
+                  icon: Icons.person_remove,
+                  text: 'Kick User',
+                  callback: () {},
+                ),
+              ),
+              Expanded(
+                child: _bottomSheetButton(
+                  icon: Icons.admin_panel_settings,
+                  text: 'Manage Admins',
+                  callback: () {},
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   Widget _bottomButtons() {
     final BuildContext context = Get.context!;
@@ -29,7 +109,7 @@ class CommunitiesPage extends StatelessWidget {
         ),
       ),
       child: SizedBox(
-        height: 80,
+        height: 70,
         child: Align(
           alignment: Alignment.center,
           child: Row(
@@ -62,13 +142,68 @@ class CommunitiesPage extends StatelessWidget {
     );
   }
 
+  Widget _communityCard(Community community) {
+    final BuildContext context = Get.context!;
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          maxHeight: 200,
+          maxWidth: 300,
+        ),
+        child: ElevatedButton(
+            onPressed: () {
+              _communitiesController.goToCommunityCallback(community);
+            },
+            onLongPress: () {
+              Get.bottomSheet(
+                _bottomSheet(community),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              primary: Theme.of(context).colorScheme.onPrimary,
+              elevation: 20,
+              shadowColor: Theme.of(context).colorScheme.secondary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              fixedSize: const Size.fromHeight(200),
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.all(30),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  community.name,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).colorScheme.primaryVariant,
+                  ),
+                ),
+                Text(
+                  community.description,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).colorScheme.primaryVariant,
+                  ),
+                )
+              ],
+            )),
+      ),
+    );
+  }
+
   Widget _communitiesList() {
     final BuildContext context = Get.context!;
 
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          vertical: 50,
+          vertical: 10,
         ),
         child: ShaderMask(
           shaderCallback: (Rect rect) {
@@ -99,6 +234,7 @@ class CommunitiesPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                     vertical: 20,
                   ),
+                  itemExtent: 225,
                   physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics(),
                   ),
@@ -117,46 +253,9 @@ class CommunitiesPage extends StatelessWidget {
     );
   }
 
-  Widget _communityCard(Community community) {
-    final BuildContext context = Get.context!;
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          maxHeight: 100,
-          maxWidth: 250,
-        ),
-        child: Container(
-          margin: const EdgeInsets.symmetric(
-            vertical: 10,
-          ),
-          height: 100,
-          width: double.maxFinite,
-          child: MaterialButton(
-            padding: const EdgeInsets.symmetric(
-              vertical: 10,
-              horizontal: 20,
-            ),
-            color: Colors.white,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(50),
-              ),
-            ),
-            onPressed: () {
-              _communitiesController.goToCommunityCallback(community);
-            },
-            child: AutoSizeText(
-              community.name,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                color: Theme.of(context).colorScheme.onBackground,
-              ),
-            ),
-          ),
-        ),
-      ),
+  AppBar _appBar() {
+    return AppBar(
+      title: const Text('Communities'),
     );
   }
 
@@ -166,7 +265,7 @@ class CommunitiesPage extends StatelessWidget {
       init: _communitiesController,
       builder: (CommunitiesController controller) {
         return WrapperScaffold(
-          headerTitle: 'Communities',
+          appBar: _appBar(),
           child: Container(
             color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
             child: Column(

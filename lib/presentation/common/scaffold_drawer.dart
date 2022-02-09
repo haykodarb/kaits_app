@@ -115,11 +115,6 @@ class ScaffoldDrawer extends StatelessWidget {
                     callback: () {},
                   ),
                   _drawerButton(
-                    text: 'Add book',
-                    icon: Icons.menu_book,
-                    callback: () {},
-                  ),
-                  _drawerButton(
                     text: 'Communities',
                     icon: Icons.people_alt_outlined,
                     callback: _wrapperScaffoldController.goToCommunities,

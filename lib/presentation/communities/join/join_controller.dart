@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:kaits_app/backend/communities_backend.dart';
 import 'package:kaits_app/models/backend_response.dart';
-import 'package:kaits_app/models/community_form.dart';
+import 'package:kaits_app/models/community.dart';
 import 'package:kaits_app/presentation/communities/communities_controller.dart';
 import 'package:kaits_app/routes.dart';
 import 'package:flutter/material.dart';

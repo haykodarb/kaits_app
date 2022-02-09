@@ -7,32 +7,15 @@ class WrapperScaffold extends StatelessWidget {
   WrapperScaffold({
     Key? key,
     required this.child,
-    this.headerTitle = '',
+    required this.appBar,
   }) : super(key: key);
 
   final Widget child;
-  final String headerTitle;
+  final AppBar appBar;
 
-  final WrapperScaffoldController _wrapperScaffoldController =
-      Get.put(WrapperScaffoldController());
-
-  AppBar _appBar() {
-    final BuildContext context = Get.context!;
-    return AppBar(
-      iconTheme: const IconThemeData(
-        size: 30,
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      centerTitle: true,
-      title: Text(
-        headerTitle,
-        style: const TextStyle(
-          fontWeight: FontWeight.w600,
-          fontSize: 19,
-        ),
-      ),
-    );
-  }
+  final WrapperScaffoldController _wrapperScaffoldController = Get.put(
+    WrapperScaffoldController(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +24,7 @@ class WrapperScaffold extends StatelessWidget {
         drawer: ScaffoldDrawer(),
         drawerEnableOpenDragGesture: true,
         backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: _appBar(),
+        appBar: appBar,
         body: child,
       ),
     );

@@ -14,6 +14,19 @@ const ColorScheme _colorScheme = ColorScheme.dark(
   onSurface: Color(0xFF2A2D37),
 );
 
+final AppBarTheme _appBarTheme = AppBarTheme(
+  backgroundColor: _colorScheme.background,
+  iconTheme: const IconThemeData(
+    size: 30,
+  ),
+  centerTitle: true,
+  titleTextStyle: TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 20,
+    color: _colorScheme.onBackground,
+  ),
+);
+
 final ElevatedButtonThemeData _elevatedButtonThemeData =
     ElevatedButtonThemeData(
   style: ElevatedButton.styleFrom(
@@ -98,4 +111,5 @@ final ThemeData theme = ThemeData(
   outlinedButtonTheme: _outlinedButtonThemeData,
   inputDecorationTheme: _inputDecorationTheme,
   iconTheme: _iconThemeData,
+  appBarTheme: _appBarTheme,
 );
