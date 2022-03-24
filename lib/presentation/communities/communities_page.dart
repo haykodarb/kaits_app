@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:kaits_app/models/community.dart';
 import 'package:kaits_app/presentation/common/wrapper_scaffold/wrapper_scaffold.dart';
 import 'package:kaits_app/presentation/communities/communities_controller.dart';
+import 'package:kaits_app/routes.dart';
 
 class CommunitiesPage extends StatelessWidget {
   CommunitiesPage({Key? key}) : super(key: key);
@@ -57,6 +58,7 @@ class CommunitiesPage extends StatelessWidget {
       onClosing: () {},
       backgroundColor: Theme.of(context).colorScheme.background,
       elevation: 10,
+      enableDrag: false,
       builder: (BuildContext context) {
         return SizedBox(
           height: 200,
@@ -68,7 +70,14 @@ class CommunitiesPage extends StatelessWidget {
                 child: _bottomSheetButton(
                   icon: Icons.person_add_alt_1,
                   text: 'Invite User',
-                  callback: () {},
+                  callback: () {
+                    Get.toNamed(
+                      RouteNames.inviteCommunityPage,
+                      arguments: {
+                        "community": community,
+                      },
+                    );
+                  },
                 ),
               ),
               Expanded(
@@ -145,54 +154,72 @@ class CommunitiesPage extends StatelessWidget {
   Widget _communityCard(Community community) {
     final BuildContext context = Get.context!;
     return Center(
-      child: ConstrainedBox(
+      child: Container(
+        margin: const EdgeInsets.symmetric(
+          vertical: 20,
+        ),
         constraints: const BoxConstraints(
-          maxHeight: 200,
           maxWidth: 300,
         ),
-        child: ElevatedButton(
-            onPressed: () {
-              _communitiesController.goToCommunityCallback(community);
-            },
-            onLongPress: () {
-              Get.bottomSheet(
-                _bottomSheet(community),
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              primary: Theme.of(context).colorScheme.onPrimary,
-              elevation: 20,
-              shadowColor: Theme.of(context).colorScheme.secondary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              fixedSize: const Size.fromHeight(200),
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.all(30),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  community.name,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.primaryVariant,
-                  ),
+        child: Center(
+          child: ElevatedButton(
+              onPressed: () {
+                _communitiesController.goToCommunityCallback(community);
+              },
+              onLongPress: () {
+                Get.bottomSheet(
+                  _bottomSheet(community),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Theme.of(context).colorScheme.onPrimary,
+                elevation: 20,
+                shadowColor: Theme.of(context).colorScheme.secondary,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                Text(
-                  community.description,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.primaryVariant,
-                  ),
-                )
-              ],
-            )),
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.all(30),
+              ),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  minHeight: 125,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      community.name,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.primaryVariant,
+                      ),
+                    ),
+                    Text(
+                      community.description,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.primaryVariant,
+                      ),
+                    ),
+                    Text(
+                      'Members: ${community.users.length}',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.primaryVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              )),
+        ),
       ),
     );
   }
@@ -234,7 +261,6 @@ class CommunitiesPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                     vertical: 20,
                   ),
-                  itemExtent: 225,
                   physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics(),
                   ),

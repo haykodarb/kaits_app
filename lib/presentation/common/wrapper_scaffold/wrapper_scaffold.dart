@@ -13,6 +13,7 @@ class WrapperScaffold extends StatelessWidget {
   final Widget child;
   final AppBar appBar;
 
+  // ignore: unused_field
   final WrapperScaffoldController _wrapperScaffoldController = Get.put(
     WrapperScaffoldController(),
   );

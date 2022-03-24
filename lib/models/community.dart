@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:kaits_app/models/user.dart';
 
 class CommunityForm {
   String name;
@@ -21,6 +22,7 @@ class Community extends CommunityForm {
   String id;
   bool isActive;
   DateTime? createdAt;
+  List<User> users = [];
 
   Community({
     required name,

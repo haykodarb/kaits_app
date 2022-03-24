@@ -55,7 +55,7 @@ final OutlinedButtonThemeData _outlinedButtonThemeData =
     textStyle: const TextStyle(
       fontSize: 22,
     ),
-    minimumSize: const Size(320, 70),
+    fixedSize: const Size(320, 70),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(40),
     ),

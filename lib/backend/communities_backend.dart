@@ -4,6 +4,7 @@ import 'package:kaits_app/backend/constants.dart';
 import 'package:kaits_app/backend/login_backend.dart';
 import 'package:kaits_app/models/backend_response.dart';
 import 'package:kaits_app/models/community.dart';
+import 'package:kaits_app/models/user.dart';
 
 class CommunitiesBackend {
   static Future<BackendReponse> register({required CommunityForm form}) async {
@@ -94,7 +95,7 @@ class CommunitiesBackend {
   static Future<BackendReponse> getUsersInCommunity(Community community) async {
     const String _authority = BackendConstants.authority;
 
-    const String _route = '/api/communities/memberships';
+    const String _route = '/api/communities/users';
 
     final String? _token = await LoginBackend.getAuthToken() ?? '';
 
@@ -110,8 +111,16 @@ class CommunitiesBackend {
       },
     );
 
-    print(response.body);
+    if (response.statusCode != 200) {
+      return BackendReponse(success: false, payload: "Server error.");
+    }
 
-    return BackendReponse(success: true, payload: '');
+    List<User>? users = User.listFromResponseBody(response.body);
+
+    if (users == null) {
+      return BackendReponse(success: false, payload: "Community is empty");
+    }
+
+    return BackendReponse(success: true, payload: users);
   }
 }

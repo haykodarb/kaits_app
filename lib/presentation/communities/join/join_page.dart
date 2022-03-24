@@ -27,9 +27,7 @@ class JoinCommunityPage extends StatelessWidget {
           selectedColor: Theme.of(context).colorScheme.primaryVariant,
           inactiveColor: Theme.of(context).colorScheme.secondary,
         ),
-        onCompleted: (String value) {
-          print(value);
-        },
+        onCompleted: (String value) {},
         onChanged: (String newValue) {},
       ),
     );
